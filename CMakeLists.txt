@@ -1,0 +1,85 @@
+cmake_minimum_required(VERSION 3.0.0)
+
+PROJECT(opengl)
+
+set(INCLUDES
+  include/loadTextFile.h
+  include/shader.h
+  include/window.h
+  include/camera.h
+  include/timer.h
+  include/debugging.h
+  include/programObject.h
+  include/textureObject.h
+  include/videoReader.h
+  )
+
+set(SOURCES
+  src/loadTextFile.cpp
+  src/window.cpp
+  src/videoReader.cpp
+  )
+
+include_directories(include)
+
+IF(CMAKE_COMPILER_IS_GNUCXX)
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y -W -Wall -pedantic")
+ENDIF()
+
+set(CMAKE_MODULE_PATH "${opengl_SOURCE_DIR}/CMakeModules;${CMAKE_MODULE_PATH}")
+
+find_package(GLEW          REQUIRED)
+find_package(OpenGL        REQUIRED)
+find_package(SDL2          REQUIRED)
+find_package(glm           REQUIRED)
+find_package(FreeImage     REQUIRED)
+find_package(FreeImagePlus REQUIRED)
+#find_package(OpenCV        REQUIRED)
+
+#set(APP_NAME opengl)
+
+#add_executable(${APP_NAME} ${SOURCES} ${INCLUDES} src/triangle.cpp)
+#target_link_libraries(${APP_NAME} OpenGL GLEW glm SDL2)
+
+function(add_binary)
+  foreach(TARG ${S_TARGETS})
+    add_executable(${TARG} ${SOURCES} ${INCLUDES} src/${TARG}.cpp)
+    target_link_libraries(${TARG} OpenGL GLEW glm SDL2 freeimage freeimageplus opencv_highgui opencv_core opencv_imgproc)
+  endforeach(TARG)
+endfunction(add_binary)
+
+set(S_TARGETS
+  triangle
+  orbitManipulator
+  interpolation
+  sphere
+  noise
+  zfight
+  blending
+  uv
+  triplanar
+  cubeMapping
+  environmentMapping
+  wrapping
+  mipmap
+  normalMapping
+  paralaxMapping
+  video
+  video_gray
+  video_sobel
+  video_gauss
+  video_random)
+add_binary()
+
+add_custom_target(copy-shaders ALL
+  COMMAND cmake -E copy_directory ${CMAKE_SOURCE_DIR}/shaders ${CMAKE_BINARY_DIR}/shaders
+  DEPENDS ${MY_TARGET})
+
+add_custom_target(copy-textures ALL
+  COMMAND cmake -E copy_directory ${CMAKE_SOURCE_DIR}/textures ${CMAKE_BINARY_DIR}/textures
+  DEPENDS ${MY_TARGET})
+
+#add_custom_target(copy-videos ALL
+#  COMMAND cmake -E copy_directory ${CMAKE_SOURCE_DIR}/videos ${CMAKE_BINARY_DIR}/videos
+#  DEPENDS ${MY_TARGET})
+
