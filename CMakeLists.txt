@@ -64,6 +64,7 @@ set(S_TARGETS
   mipmap
   normalMapping
   paralaxMapping
+  fsRayTracing
   #video
   #video_gray
   #video_sobel
