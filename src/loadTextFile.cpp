@@ -1,5 +1,6 @@
 #include<loadTextFile.h>
 #include<fstream>
+#include<string>
 
 std::string loadFile(std::string fileName){
   std::ifstream f(fileName.c_str());

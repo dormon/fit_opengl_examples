@@ -11,13 +11,13 @@ set(INCLUDES
   include/debugging.h
   include/programObject.h
   include/textureObject.h
-  include/videoReader.h
+  #include/videoReader.h
   )
 
 set(SOURCES
   src/loadTextFile.cpp
   src/window.cpp
-  src/videoReader.cpp
+  #src/videoReader.cpp
   )
 
 include_directories(include)
@@ -31,9 +31,9 @@ set(CMAKE_MODULE_PATH "${opengl_SOURCE_DIR}/CMakeModules;${CMAKE_MODULE_PATH}")
 find_package(GLEW          REQUIRED)
 find_package(OpenGL        REQUIRED)
 find_package(SDL2          REQUIRED)
-find_package(glm           REQUIRED)
-find_package(FreeImage     REQUIRED)
-find_package(FreeImagePlus REQUIRED)
+find_package(glm           QUIET)
+find_package(FreeImage     QUIET)
+find_package(FreeImagePlus QUIET)
 #find_package(OpenCV        REQUIRED)
 
 #set(APP_NAME opengl)
@@ -44,7 +44,7 @@ find_package(FreeImagePlus REQUIRED)
 function(add_binary)
   foreach(TARG ${S_TARGETS})
     add_executable(${TARG} ${SOURCES} ${INCLUDES} src/${TARG}.cpp)
-    target_link_libraries(${TARG} OpenGL GLEW glm SDL2 freeimage freeimageplus opencv_highgui opencv_core opencv_imgproc)
+    target_link_libraries(${TARG} OpenGL GLEW glm SDL2 FreeImage FreeImagePlus)# opencv_highgui opencv_core opencv_imgproc)
   endforeach(TARG)
 endfunction(add_binary)
 
@@ -64,11 +64,12 @@ set(S_TARGETS
   mipmap
   normalMapping
   paralaxMapping
-  video
-  video_gray
-  video_sobel
-  video_gauss
-  video_random)
+  #video
+  #video_gray
+  #video_sobel
+  #video_gauss
+  #video_random
+  )
 add_binary()
 
 add_custom_target(copy-shaders ALL
