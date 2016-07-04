@@ -22,7 +22,7 @@ struct Ray{
 };
 
 float sphereCollision(out Ray outRay,in Ray inRay,in Sphere sphere){
-  outRay = inRay;
+  //outRay = inRay;
   vec3 ps = inRay.start - sphere.positionRadius.xyz;
   float a = dot(inRay.direction,inRay.direction);
   float b = 2*dot(inRay.direction,ps);
@@ -50,7 +50,7 @@ float planeCollision(out Ray outRay,in Ray inRay,in vec4 plane){
 }
 
 uint spheresCollision(out Ray outRay,in Ray inRay,uint skipSphere){
-  outRay = inRay;
+  //outRay = inRay;
   float minT = 10e10;
   uint sphereId = nofSpheres;
   for(uint k=0;k<nofSpheres;++k){
@@ -71,7 +71,8 @@ void main(){
   
   Ray ray;
   ray.start = (inverse(v)*vec4(0,0,0,1)).xyz;
-  ray.direction = normalize((inverse(v)*vec4((inverse(p)*vec4(vCoord,1,1)).xyz,0)).xyz);
+  vec3 viewSpace = (inverse(p)*vec4(vCoord,1,1)).xyz;
+  ray.direction = normalize((inverse(v)*vec4(viewSpace,0)).xyz);
 
   /*
   Sphere sphere = spheres[0];
@@ -85,7 +86,7 @@ void main(){
   */
   Ray newRay;
 
-  const uint rayDepth = 10;
+  const uint rayDepth = 3;
   uint i=0;
   uint skipSphere = nofSpheres;
   for(i=0;i<rayDepth;++i){

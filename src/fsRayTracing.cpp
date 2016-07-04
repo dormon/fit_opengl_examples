@@ -102,12 +102,22 @@ void init(Data*data){
           loadFile("shaders/fsRayTracing.fp"))));
 
   data->cubeTexture = std::make_shared<TextureObject>(
+      /*
+      "textures/volareft.tga",
+      "textures/volarebk.tga",
+      "textures/volareup.tga",
+      "textures/volaredn.tga",
+      "textures/volarelf.tga",
+      "textures/volarert.tga",
+      // */
+//*
       "textures/cube0.png",
       "textures/cube1.png",
       "textures/cube2.png",
       "textures/cube3.png",
       "textures/cube4.png",
       "textures/cube5.png",
+     // */
       GL_RGBA,true);
 
 
