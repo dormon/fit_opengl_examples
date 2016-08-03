@@ -4,7 +4,7 @@
 
 SDLWindow::SDLWindow(uint32_t width,uint32_t heigth){
   SDL_Init(SDL_INIT_VIDEO);//init. video
-  this->_window = SDL_CreateWindow("sdl2",0,0,width,heigth,
+  this->_window = SDL_CreateWindow("sdl2",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,width,heigth,
       SDL_WINDOW_OPENGL|SDL_WINDOW_SHOWN);
 
   unsigned profile = SDL_GL_CONTEXT_PROFILE_CORE;//context profile
