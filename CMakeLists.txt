@@ -11,6 +11,7 @@ set(INCLUDES
   include/debugging.h
   include/programObject.h
   include/textureObject.h
+  include/ValuePrinter.h
   #include/videoReader.h
   )
 
@@ -66,6 +67,7 @@ set(S_TARGETS
   paralaxMapping
   fsRayTracing
   rasterizationOrder
+  memoryBandwidth
   #video
   #video_gray
   #video_sobel
