@@ -19,6 +19,11 @@ GLuint compileShader(GLenum type,ARGS... sources){
   //compile shader
   glCompileShader(id);
 
+  //get compilation status
+  GLint status;
+  glGetShaderiv(id,GL_COMPILE_STATUS,&status);
+  if(status == GL_TRUE)return id;
+
   //get compilation log
   GLint bufferLen;
   glGetShaderiv(id,GL_INFO_LOG_LENGTH,&bufferLen);
@@ -44,6 +49,16 @@ GLuint createProgram(ARGS...args){
   //link program
   glLinkProgram(id);
 
+  //get linking status
+  GLint status;
+  glGetProgramiv(id,GL_LINK_STATUS,&status);
+  if(status == GL_TRUE){
+    //mark shaders for deletion
+    auto dummy1 = {(glDeleteShader(args),0)...};
+    (void)dummy1;
+    return id;
+  }
+
   //get linking log
   GLint bufferLen;
   glGetProgramiv(id,GL_INFO_LOG_LENGTH,&bufferLen);
@@ -53,12 +68,6 @@ GLuint createProgram(ARGS...args){
     std::cerr<<buffer<<std::endl;
     delete[]buffer;
     glDeleteProgram(id);
-    id = 0;
   }
-
-  //mark shaders for deletion
-  auto dummy1 = {(glDeleteShader(args),0)...};
-  (void)dummy1;
-
-  return id;
+  return 0;
 }
