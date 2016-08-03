@@ -65,6 +65,7 @@ set(S_TARGETS
   normalMapping
   paralaxMapping
   fsRayTracing
+  rasterizationOrder
   #video
   #video_gray
   #video_sobel
